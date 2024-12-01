@@ -4,7 +4,7 @@ import styles from "@/styles/Home.module.css";
 import { Footer } from "@/components/Footer";
 import Main from "@/components/Main";
 import Header from "@/components/Header";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -18,15 +18,15 @@ const geistMono = localFont({
 });
 
 export default function Home() {
+  const [foo, setFoo] = useState(1);
 
-  // const handleClick = useCallback((e) => {
-  //   console.log(e.target);
-  //   e.preventDefault();
-  // }, []);
-
+  const handleClick = (e) => {
+    e.preventDefault();
+    setFoo((prevFoo) => prevFoo + 1);
+  }
+  
   useEffect(() => {
-    document.body.style.backgroundColor = "black";
-
+    document.body.style.backgroundColor = "lightblue";
     return () => {
       document.body.style.backgroundColor = "";
     };
@@ -45,9 +45,10 @@ export default function Home() {
         className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
       >
         <Header />
-        {/* <a href="/about" onClick={handleClick}>
+        <h1>{foo}</h1>
+        <button href="/about" onClick={handleClick}>
           ボタン
-        </a> */}
+        </button>
         <Main page="index" />
         <Footer />
       </div>
