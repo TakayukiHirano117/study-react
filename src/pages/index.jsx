@@ -19,12 +19,31 @@ const geistMono = localFont({
 
 export default function Home() {
   const [count, setCount] = useState(1);
+  const [text, setText] = useState("");
+  const [array, setArray] = useState([1, 2, 3]);
+
+  const handleChange = (e) => {
+    setText(e.target.value.trim());
+  }
+
+  const handleAdd = useCallback(() => {
+    setArray((prevArray) => {
+      if(prevArray.some(item => item === text)) {
+        return prevArray
+      }
+      // const newArray = [...prevArray, text]
+      return [...prevArray, text];
+    });
+
+    setText('')
+  }, [text])
 
   const handleClick = useCallback((e) => {
     console.log(count)
     if(count < 10) {
       setCount((prevCount) => prevCount + 1);  
     }
+
 
     // setCount((prevCount) => prevCount + 1);
   }, [count])
@@ -53,6 +72,14 @@ export default function Home() {
         <button href="/about" onClick={handleClick}>
           ボタン
         </button>
+        <input type="text" value={text} onChange={(e) => handleChange(e)} />
+        <button onClick={handleAdd}>追加</button>
+        <ul>
+          {
+            array.map((item) => {
+              return <li key={item}>{item}</li>
+            })}
+        </ul>
         <Main page="index" />
         <Footer />
       </div>
